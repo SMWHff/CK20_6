@@ -6,9 +6,6 @@
 # @Project    : CK20_6
 # @File       : contact_page.py
 # @Time       : 2021/8/29 15:39
-import sys
-from time import sleep
-
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from page_object.base_page import BasePage
@@ -20,8 +17,8 @@ class ContactPage(BasePage):
     """
     _base_url = "https://work.weixin.qq.com/wework_admin/frame#contacts"
 
-    _member_name = (By.CSS_SELECTOR,".member_colRight_memberTable_td:nth-child(2)")
-    _member_phone = (By.CSS_SELECTOR,".member_colRight_memberTable_td:nth-child(5)")
+    _member_name = (By.CSS_SELECTOR, ".member_colRight_memberTable_td:nth-child(2)")
+    _member_phone = (By.CSS_SELECTOR, ".member_colRight_memberTable_td:nth-child(5)")
     _delete = (By.CSS_SELECTOR, ".js_delete")
     _accept = (By.XPATH, "//a[text()='确认']")
     _tips = (By.ID, "js_tips")
@@ -53,9 +50,9 @@ class ContactPage(BasePage):
         self.find(self._accept).click()
         # 显示等待 6 秒，每隔 0.5 秒进行一次判断是否删除完毕
         # 如果找不到“正在删除...”，则表示删除操作完毕
-        WebDriverWait(self, 6).until_not(lambda x:x.find(x._tips).text == "正在删除...")
-        tips = self.find(self._tips).text
-        return tips
+        WebDriverWait(self, 6).until_not(lambda x: self.find(self._tips).text == "正在删除...")
+        result = self.find(self._tips).text
+        return result
 
     def get_members(self):
         """
@@ -72,7 +69,6 @@ class ContactPage(BasePage):
             name_list.append(ele.text)
         # 返回姓名列表
         return name_list
-
 
     # def del_member(self, phone):
     #     """
@@ -106,9 +102,5 @@ class ContactPage(BasePage):
 
 
 if __name__ == "__main__":
-    #contact = ContactPage()
-    #print(contact.del_member("15578805343"))
-    try:
-        assert 1 == 0, "错误"
-    except:
-        print(str(sys.exc_info()[1]))
+    contact = ContactPage()
+    print(contact.del_member("15578805343"))

@@ -6,7 +6,6 @@
 # @Project    : CK20_6
 # @File       : test_add_members.py
 # @Time       : 2021/8/29 15:43
-import sys
 
 import allure
 import pytest
@@ -25,15 +24,17 @@ def get_case_data():
     add_member_ids = case_data.get("add_member").get("ids")
     add_member_fail_data = case_data.get("add_member_fail").get("data")
     add_member_fail_ids = case_data.get("add_member_fail").get("ids")
-    return del_member_data,del_member_ids,\
-           add_member_data,add_member_ids, \
-           add_member_fail_data,add_member_fail_ids
+    return \
+        del_member_data, del_member_ids, \
+        add_member_data, add_member_ids, \
+        add_member_fail_data, add_member_fail_ids
 
 
 class TestCase:
     """
     测试用例
     """
+
     def setup_class(self):
         # 类创建时调用一次
         # 启动浏览器，并登陆企业微信到首页
@@ -44,8 +45,18 @@ class TestCase:
         # 关闭浏览器
         self.index.browser.quit()
 
+    # 设置测试用例跳过不执行
+    @pytest.mark.skip
+    # 设置测试用例功能名
+    @allure.feature("被跳过的测试用例")
+    def test_demo(self):
+        pass
+
+    # 设置测试用例参数化
     @pytest.mark.parametrize("phone", get_case_data()[0], ids=get_case_data()[1])
+    # 设置测试用例功能名
     @allure.feature("删除成员成功")
+    # 设置测试用例执行顺序
     @pytest.mark.run(order=3)
     def test_del_members(self, phone):
         """
@@ -58,7 +69,7 @@ class TestCase:
         with allure.step("在首页点击通讯录按钮，跳转到添加通讯录页面"):
             add_members = index.goto_contact()
         with allure.step("根据手机号勾选成员，点击删除，并操作结果"):
-             tips = add_members.del_member(phone)
+            tips = add_members.del_member(phone)
         # 提前预断言判断
         if "删除成功" not in tips:
             # 浏览器截图
@@ -68,10 +79,11 @@ class TestCase:
         # 进行断言判断
         assert "删除成功" in tips, f"删除成功 in {tips}"
 
-
-    # @pytest.mark.skip
+    # 设置测试用例参数化
     @pytest.mark.parametrize("name,acctid,phone", get_case_data()[2], ids=get_case_data()[3])
+    # 设置测试用例功能名
     @allure.feature("添加成员成功")
+    # 设置测试用例执行顺序
     @pytest.mark.run(order=1)
     def test_add_members(self, name, acctid, phone):
         """
@@ -85,7 +97,7 @@ class TestCase:
         with allure.step("在首页点击添加成员按钮，跳转到添加成员页面"):
             add_members = index.goto_add_members()
         with allure.step("填充成员信息（姓名、账号、手机号），并保存"):
-             contact = add_members.add_member(name, acctid, phone)
+            contact = add_members.add_member(name, acctid, phone)
         with allure.step("跳转到通讯录页面，并返回姓名列表"):
             name_list = contact.get_members()
         # 提前预断言判断
@@ -97,10 +109,11 @@ class TestCase:
         # 进行断言判断
         assert name in name_list
 
-
-    # @pytest.mark.skip
+    # 设置测试用例参数化
     @pytest.mark.parametrize("name,acctid,phone,expect", get_case_data()[4], ids=get_case_data()[5])
+    # 设置测试用例功能名
     @allure.feature("添加成员失败")
+    # 设置测试用例执行顺序
     @pytest.mark.run(order=2)
     def test_add_members_fail(self, name, acctid, phone, expect):
         """
@@ -113,9 +126,9 @@ class TestCase:
         with allure.step("在首页点击添加成员按钮，跳转到添加成员页面"):
             add_members = index.goto_add_members()
         with allure.step("填充错误的成员信息（姓名、账号、手机号），并返回错误信息"):
-             tips = add_members.add_member_fail(name, acctid, phone, expect)
+            tips = add_members.add_member_fail(name, acctid, phone, expect)
         # 提前预断言判断
-        if  expect not in tips:
+        if expect not in tips:
             # 浏览器截图
             path = self.index.SnapShot()
             # 将截图贴到报告中

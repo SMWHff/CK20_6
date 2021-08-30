@@ -6,12 +6,13 @@
 # @Project    : CK20_6
 # @File       : conftest.py
 # @Time       : 2021/8/29 18:04
+
 import time
 import pytest
+from typing import List
 
 
 # 将Unicode码替换成文字
-from typing import List
 def pytest_collection_modifyitems(session: "Session", config: "Config", items: List["Item"]) -> None:
     # 遍历所有的用例
     for item in items:

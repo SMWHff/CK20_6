@@ -6,7 +6,6 @@
 # @Project    : CK20_6
 # @File       : add_members_page.py
 # @Time       : 2021/8/29 15:38
-from time import sleep
 
 from selenium.webdriver.common.by import By
 
@@ -56,8 +55,6 @@ class AddMembersPage(BasePage):
         添加成员操作
         :return: 返回通讯录页面实例化对象
         """
-        # 创建提示内容列表
-        tips_list = []
         # 输入姓名
         self.find(self._username).send_keys(name)
         # 输入账号
@@ -67,5 +64,5 @@ class AddMembersPage(BasePage):
         # 利用JS将为元素失去焦点
         self.browser.execute_script("arguments[0].blur();", self.find(self._phone))
         # 获取错误提示
-        tips = self.find(By.XPATH, f"//*[contains(text(),'{expect}')]").text
-        return tips
+        result = self.find(By.XPATH, f"//*[contains(text(),'{expect}')]").text
+        return result

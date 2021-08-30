@@ -14,4 +14,4 @@ if __name__ == "__main__":
         os.system("cmd /C taskkill /f /im chromedriver.exe")
     finally:
         pytest.main(["-vs", "--alluredir", "./temp", "--clean-alluredir"])
-        # allure generate ./temp -o ./report --clean
+        # 终端上输入 allure generate ./temp -o ./report --clean

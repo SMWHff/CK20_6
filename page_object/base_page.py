@@ -14,8 +14,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.remote.webdriver import WebDriver
 
-
 case_yml = "./data/case.yml"
+
 
 class BasePage:
     """
@@ -48,7 +48,6 @@ class BasePage:
                     # 打开指定网址
                     self.browser.get(self._base_url)
 
-
     def login(self):
         while True:
             # 判断 cookies.yml 文件是否存在
@@ -77,17 +76,17 @@ class BasePage:
                     yaml.safe_dump(cookies, f)
             # 再次打开后台指定网址
             self.browser.get(self._base_url)
+            # noinspection PyBroadException
             try:
                 # 使用显式等待查找【退出】按钮，间隔 1 秒查找一次，循环查找 5 秒
                 # 如果找到【退出】按钮，则表示为已登录状态
-                WebDriverWait(self, 5, 1).until(lambda x:x.find(By.ID, "logout"))
+                WebDriverWait(self, 5, 1).until(lambda x: x.find(By.ID, "logout"))
                 # 跳出子程序
                 return
-            except:
+            except Exception:
                 # 登录状态失效过期，删除失效的 cookies.yml 文件
-                os.remove(self._cookies_yml)
                 # 这样进入下一轮循环，就会进入到人工扫码分支了
-
+                os.remove(self._cookies_yml)
 
     def find(self, by, value=None):
         """
@@ -100,7 +99,6 @@ class BasePage:
             return self.browser.find_element(*by)
         else:
             return self.browser.find_element(by, value)
-
 
     def finds(self, by, value=None):
         """
@@ -115,5 +113,9 @@ class BasePage:
             return self.browser.find_elements(by, value)
 
     def SnapShot(self):
+        """
+        截取浏览器页面快照
+        :return: 返回图片文件路径
+        """
         self.browser.save_screenshot(self._save_filename)
         return self._save_filename
