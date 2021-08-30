@@ -9,6 +9,7 @@
 import os
 import time
 import yaml
+import logging
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -28,6 +29,8 @@ class BasePage:
     def __init__(self, base_browser: WebDriver = None):
         # 判断 driver 对象是否存在
         if base_browser is None:
+            # log输出日志界别
+            logging.basicConfig(level=logging.DEBUG)
             # 启动谷歌浏览器
             self.browser = webdriver.Chrome()
             # 设置隐式等待 5 秒
