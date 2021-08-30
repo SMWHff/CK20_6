@@ -50,6 +50,10 @@ class TestCase:
     # 设置测试用例功能名
     @allure.feature("被跳过的测试用例")
     def test_demo(self):
+        """
+        未完工的测试用例
+        :return:
+        """
         pass
 
     # 设置测试用例参数化
@@ -60,6 +64,7 @@ class TestCase:
     @pytest.mark.run(order=3)
     def test_del_members(self, phone):
         """
+        删除成员测试用例
         1、在首页点击通讯录按钮
         2、跳转到添加通讯录页面
         3、根据手机号勾选成员，点击删除，并操作结果
@@ -87,6 +92,7 @@ class TestCase:
     @pytest.mark.run(order=1)
     def test_add_members(self, name, acctid, phone):
         """
+        添加成员测试用例成功
         1、在首页点击添加成员按钮
         2、跳转到添加成员页面
         3、填充正确的成员信息（姓名、账号、手机号），并保存
@@ -117,6 +123,7 @@ class TestCase:
     @pytest.mark.run(order=2)
     def test_add_members_fail(self, name, acctid, phone, expect):
         """
+        添加成员测试用例失败
         1、在首页点击添加成员按钮
         2、跳转到添加成员页面
         3、填充错误的成员信息（姓名、账号、手机号），并返回获取的错误信息

@@ -10,8 +10,6 @@ import os
 import pytest
 
 if __name__ == "__main__":
-    try:
-        os.system("cmd /C taskkill /f /im chromedriver.exe")
-    finally:
-        pytest.main(["-vs", "--alluredir", "./temp", "--clean-alluredir"])
-        # 终端上输入 allure generate ./temp -o ./report --clean
+    # 启动测试用例，并清除旧报告，生成新的报告
+    pytest.main(["-vs", "--alluredir", "./temp", "--clean-alluredir"])
+    # 终端上输入 allure generate ./temp -o ./report --clean

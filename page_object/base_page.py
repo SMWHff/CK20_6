@@ -49,6 +49,10 @@ class BasePage:
                     self.browser.get(self._base_url)
 
     def login(self):
+        """
+        登录企业微信
+        :return:
+        """
         while True:
             # 判断 cookies.yml 文件是否存在
             if os.path.isfile(self._cookies_yml):
