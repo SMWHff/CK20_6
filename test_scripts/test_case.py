@@ -10,12 +10,15 @@
 import allure
 import pytest
 import yaml
-
 from page_object.base_page import case_yml
 from page_object.index_page import IndexPage
 
 
 def get_case_data():
+    """
+    从文件中加载测试用例数据
+    :return: 返回测试用例数据
+    """
     with open(case_yml, encoding="utf-8") as f:
         case_data = yaml.safe_load(f)
     del_member_data = case_data.get("del_member").get("data")
